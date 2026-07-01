@@ -6,11 +6,45 @@
   const slotButton = document.querySelector("[data-slot-start]");
   const slotResult = document.querySelector("[data-slot-result]");
   const coinsValue = document.querySelector("[data-slot-coins]");
+  const petTipArchive = window.BEIAI_PET_TIPS_ARCHIVE;
+  const textEncoder = new TextEncoder();
+  const textDecoder = new TextDecoder();
 
   if (!petApi || reels.length !== 3 || !slotButton) return;
 
   let state = petApi.getPetState();
   let spinning = false;
+
+  function base64ToBytes(value) {
+    const binary = atob(value);
+    return Uint8Array.from(binary, (character) => character.charCodeAt(0));
+  }
+
+  async function decryptPetTips() {
+    if (!petTipArchive?.entries?.length || !globalThis.crypto?.subtle) return [];
+    const key = await crypto.subtle.importKey(
+      "raw",
+      base64ToBytes(petTipArchive.key),
+      { name: "AES-GCM" },
+      false,
+      ["decrypt"]
+    );
+
+    return Promise.all(petTipArchive.entries.map(async (entry, index) => {
+      const plaintext = await crypto.subtle.decrypt(
+        {
+          name: "AES-GCM",
+          iv: base64ToBytes(entry.iv),
+          additionalData: textEncoder.encode(`beiai-pet-tip:${index + 1}:v1`)
+        },
+        key,
+        base64ToBytes(entry.ciphertext)
+      );
+      return textDecoder.decode(plaintext).trim();
+    }));
+  }
+
+  const petTipsReady = decryptPetTips().catch(() => []);
 
   function randomItem(items) {
     return items[Math.floor(Math.random() * items.length)];
@@ -26,18 +60,22 @@
     render();
   }
 
-  function finishSlot(results) {
+  async function finishSlot(results) {
     const uniqueCount = new Set(results).size;
     let reward = 0;
 
     if (uniqueCount === 1) {
       reward = 30;
       slotResult.textContent = "JACKPOT! 三个相同，奖励 30 coins!";
-      state.message = "JACKPOT!!! 今天的网络运气很好！";
+      const petTips = await petTipsReady;
+      state.message = randomItem(petTips) || "JACKPOT!!! 今天的网络运气很好！";
+      state.sleeping = false;
     } else if (uniqueCount === 2) {
       reward = 8;
       slotResult.textContent = "PAIR! 两个相同，奖励 8 coins!";
-      state.message = "中了两个一样的，有一点点幸运。";
+      const petTips = await petTipsReady;
+      state.message = randomItem(petTips) || "中了两个一样的，有一点点幸运。";
+      state.sleeping = false;
     } else {
       slotResult.textContent = "MISS... 本次消耗 5 coins。";
       state.message = "这次没有中奖，再来一次吗？";
