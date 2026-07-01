@@ -1,0 +1,127 @@
+﻿<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>音乐 - 北艾的个人主页</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="site-consent.js"></script>
+</head>
+<body>
+  <div class="site">
+    <div class="top-strip">♪ Music room online ♪ 38 tracks loaded ♪ real-time spectrum ready ♪</div>
+
+    <header class="hero compact-hero">
+      <h1>音乐 <span>MUSIC ROOM</span></h1>
+      <p>把耳机戴好。这里收纳了北艾的本地曲目、对应封面和逐行歌词，频谱会跟着正在播放的声音实时发亮。</p>
+    </header>
+
+    <div class="marquee-box">
+      <marquee scrollamount="5" data-now-playing>♪ MUSIC ROOM 正在读取曲目 ♪</marquee>
+    </div>
+
+    <div class="gif-strip" aria-label="千禧年网页动图装饰">
+      <img src="gifs/glitter-effect.gif" alt="闪光装饰" loading="lazy" decoding="async" />
+      <img src="gifs/under-construction.gif" alt="施工中动图" loading="lazy" decoding="async" />
+      <img src="gifs/loading-orb.gif" alt="透明加载动图" loading="lazy" decoding="async" />
+    </div>
+
+    <nav class="nav">
+      <a href="index.html">主页</a>
+      <a href="talk.html">杂谈</a>
+      <a class="nav-diary" href="diary.html">日记</a>
+      <a class="active" href="music.html">音乐</a>
+      <a href="notice.html">公告</a>
+      <a href="aichat.html">AI CHAT</a>
+      <a class="nav-reward" href="reward.html" aria-label="打赏" title="打赏">¥</a>
+    </nav>
+
+    <div class="layout">
+      <aside>
+        <section class="box">
+          <div class="box-title">PLAYLIST</div>
+          <div class="box-content playlist-box">
+            <ol class="playlist" data-playlist aria-label="音乐播放列表"></ol>
+          </div>
+        </section>
+        <section class="box">
+          <div class="box-title">AUDIO STATUS</div>
+          <div class="box-content player-status" data-player-status>选择一首音乐开始播放</div>
+        </section>
+      </aside>
+
+      <main class="main-card">
+        <section class="page-section">
+          <h2 class="section-head">◇ Music / 音乐</h2>
+          <section class="music-player" aria-label="音乐播放器">
+            <div class="player-display">
+              <div class="album-cover-wrap">
+                <img class="album-cover" data-cover src="assets/hero-glass-garden.png" alt="当前歌曲封面" loading="lazy" decoding="async" />
+                <span class="cover-glare" aria-hidden="true"></span>
+              </div>
+
+              <div class="player-main">
+                <p class="now-label">NOW PLAYING</p>
+                <h3 class="track-title" data-track-title>正在读取音乐...</h3>
+                <p class="track-artist" data-track-artist>BEIAI MUSIC ROOM</p>
+
+                <div class="visualizer" aria-label="实时音频频谱">
+                  <canvas data-visualizer></canvas>
+                </div>
+
+                <div class="time-row">
+                  <span data-current-time>00:00</span>
+                  <input class="seek-slider" data-seek type="range" min="0" max="1000" value="0" aria-label="播放进度" />
+                  <span data-duration>00:00</span>
+                </div>
+
+                <div class="player-controls">
+                  <button class="player-icon" type="button" data-prev aria-label="上一首" title="上一首">⏮</button>
+                  <button class="player-icon play-button" type="button" data-play aria-label="播放" title="播放">▶</button>
+                  <button class="player-icon" type="button" data-next aria-label="下一首" title="下一首">⏭</button>
+                  <button class="player-icon pet-feed-button" type="button" data-feed-current aria-label="把当前音乐投喂给宠物" title="把当前音乐投喂给宠物">PET</button>
+                  <button class="player-icon music-motion-button" type="button" data-music-motion-toggle aria-label="关闭页面抖动" title="关闭页面抖动" aria-pressed="true">震</button>
+                  <button class="player-icon volume-button" type="button" data-mute aria-label="静音" title="静音">🔊</button>
+                  <input class="volume-slider" data-volume type="range" min="0" max="1" step="0.01" value="0.5" aria-label="音量" />
+                  <label class="music-motion-strength" title="页面抖动幅度">
+                    <span>AMP <output data-music-motion-strength-value>100%</output></span>
+                    <input data-music-motion-strength type="range" min="0.25" max="2" step="0.05" value="1" aria-label="页面抖动幅度" />
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <section class="lyrics-panel" aria-live="polite">
+              <div class="lyrics-heading">
+                <span>LYRICS DISPLAY</span>
+                <span data-lyrics-state>SYNC READY</span>
+              </div>
+              <div class="lyrics-scroll" data-lyrics></div>
+            </section>
+
+            <audio data-audio preload="none"></audio>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <footer class="footer">© 北艾的个人主页 · Music room online</footer>
+  </div>
+
+  <button class="ai-button" type="button" data-chat-toggle>AI<br />CHAT</button>
+  <section id="aiWindow" class="ai-window" aria-label="悬浮聊天窗">
+    <div class="ai-top"><span>beiaiCHAT mini - online</span><button class="ai-close" type="button" data-chat-toggle>X</button></div>
+    <div class="ai-messages" data-chat-log="floating"></div>
+    <form class="ai-form" data-chat-form>
+      <input data-chat-input type="text" autocomplete="off" placeholder="输入留言..." />
+      <button type="submit">SEND</button>
+    </form>
+  </section>
+  <script src="music-data.js"></script>
+  <script src="pet-state.js"></script>
+  <script src="script.js"></script>
+  <script src="music-player.js"></script>
+  <script src="global-player.js"></script>
+</body>
+</html>
+

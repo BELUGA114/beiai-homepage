@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>北艾 SLOT MINI GAME</title>
+  <script>
+    if (new URLSearchParams(window.location.search).has("compact")) {
+      document.documentElement.classList.add("compact-slot");
+    }
+  </script>
+  <link rel="stylesheet" href="pet.css" />
+</head>
+<body class="slot-only">
+  <main class="slot-page">
+    <section class="slot-machine" aria-labelledby="slotTitle">
+      <div class="slot-titlebar">
+        <span id="slotTitle">SLOT MINI GAME</span>
+        <span>COINS: <b data-slot-coins>20</b></span>
+      </div>
+      <div class="slot-body">
+        <div class="slot-reels" aria-label="老虎机结果">
+          <div class="slot-reel" data-slot-reel>☆</div>
+          <div class="slot-reel" data-slot-reel>♥</div>
+          <div class="slot-reel" data-slot-reel>7</div>
+        </div>
+        <div class="slot-panel">
+          <button type="button" data-slot-start>START -5</button>
+          <p data-slot-result aria-live="polite">3 SAME = +30 / 2 SAME = +8</p>
+        </div>
+      </div>
+      <div class="slot-footer">LUCKY CHANNEL ONLINE · GLITTER MODE READY · NO REFUNDS</div>
+    </section>
+  </main>
+
+  <script src="music-data.js"></script>
+  <script src="pet-state.js"></script>
+  <script src="slot.js"></script>
+</body>
+</html>

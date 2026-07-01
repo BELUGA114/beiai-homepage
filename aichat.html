@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI CHAT - 北艾的个人主页</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="site-consent.js"></script>
+</head>
+<body class="chat-page classical-chat-page">
+  <div class="site">
+    <div class="top-strip">ARCHIVUM BEIAI · ANNO MMXXVI · THE CONVERSATION CONTINUES</div>
+
+    <header class="hero compact-hero chat-hero">
+      <h1>AI CHAT <span>THE QUIET ARCHIVE</span></h1>
+      <p>言语被暂存于石墙之间。</p>
+    </header>
+
+    <div class="marquee-box">
+      <marquee scrollamount="4">北艾祝你天天被爱
+
+      </marquee>
+    </div>
+
+    <div class="classical-divider" aria-hidden="true">
+      <span>✠</span>
+      <b>MEMORIA · HISTORIA · COLLOQUIUM</b>
+      <span>MMXXVI</span>
+    </div>
+
+    <nav class="nav">
+      <a href="index.html">主页</a>
+      <a href="talk.html">杂谈</a>
+      <a class="nav-diary" href="diary.html">日记</a>
+      <a href="music.html">音乐</a>
+      <a href="notice.html">公告</a>
+      <a class="active" href="aichat.html">AI CHAT</a>
+      <a class="nav-reward" href="reward.html" aria-label="打赏" title="打赏">¥</a>
+    </nav>
+
+    <div class="layout">
+      <aside>
+        <section class="box">
+          <div class="box-title">ARCHIVE STATUS</div>
+          <div class="box-content">
+            <b>卷宗：</b>DeepSeek API<br />
+            <b>记忆：</b>浏览器存档<br />
+            <b>抄本：</b>完整页与悬浮窗同步<br />
+            <b>中转：</b>Cloudflare Worker
+          </div>
+        </section>
+        <section class="box">
+          <div class="box-title">MARGINALIA</div>
+          <div class="box-content">
+            北艾在死之前，把自己的所有能留下的都留下来了，把记忆和感情融于一炉，练出了Beiai-chat，但是似乎有什么不太对的地方......
+          </div>
+        </section>
+      </aside>
+
+      <main class="main-card">
+        <section class="page-section">
+          <h2 class="section-head">Scriptorium / 北艾的对话抄写室</h2>
+          <div class="chat-stage">
+            <aside class="standee-placeholder" aria-label="北艾人物立绘">
+              <div class="standee-screen">
+                <img class="standee-art" src="assets/beiai-standee-transparent.png" alt="北艾人物立绘" loading="lazy" decoding="async" />
+              </div>
+              <span>北艾人物绘卷</span>
+              <small>FIGURE PLATE · ARCHIVE I</small>
+            </aside>
+
+            <div class="chat-console">
+              <div class="chat-console-top">
+                <span>BEIAI ARCHIVE · VOLUME I</span>
+                <button class="mini-button" type="button" data-chat-clear>清空</button>
+              </div>
+              <div class="ai-messages full-chat-log" data-chat-log="page"></div>
+              <form class="ai-form full-chat-form" data-chat-form>
+                <input data-chat-input type="text" autocomplete="off" placeholder="在此写下留言，悬浮窗会同步保存..." />
+                <button type="submit">写入</button>
+              </form>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <footer class="footer">© 北艾的个人主页 · Archivum MMXXVI</footer>
+  </div>
+
+  <button class="ai-button" type="button" data-chat-toggle>AI<br />CHAT</button>
+  <section id="aiWindow" class="ai-window" aria-label="悬浮聊天窗">
+    <div class="ai-top"><span>BEIAI · POCKET ARCHIVE</span><button class="ai-close" type="button" data-chat-toggle>X</button></div>
+    <div class="ai-messages" data-chat-log="floating"></div>
+    <form class="ai-form" data-chat-form>
+      <input data-chat-input type="text" autocomplete="off" placeholder="写下留言..." />
+      <button type="submit">写入</button>
+    </form>
+  </section>
+  <script src="music-data.js"></script>
+  <script src="pet-state.js"></script>
+  <script src="script.js"></script>
+  <script src="global-player.js"></script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>北艾 CYBER PET</title>
+  <script>
+    if (new URLSearchParams(window.location.search).has("compact")) {
+      document.documentElement.classList.add("compact-pet");
+    }
+  </script>
+  <link rel="stylesheet" href="pet.css" />
+</head>
+<body>
+  <main class="pet-page">
+    <section class="pet-device" aria-labelledby="petTitle">
+      <div class="pet-titlebar">
+        <span id="petTitle">☆ BEIAI CYBER PET ☆</span>
+        <span class="pet-online" data-pet-status>ONLINE</span>
+      </div>
+
+      <div class="pet-toolbar">
+        <span>WEB PET v2.0</span>
+        <div class="pet-toolbar-actions">
+          <button type="button" data-pet-reroll title="随机更换背景和角色">RE-GENERATE</button>
+          <button type="button" data-pet-debug-reset title="调试用：从头重置剧情与日记解谜进度" hidden>DEBUG RESET</button>
+        </div>
+      </div>
+
+      <div class="pet-screen">
+        <img class="pet-background" data-pet-background src="assets/pet/backgrounds/bg-room.svg" alt="电子宠物背景" loading="lazy" decoding="async" />
+        <div class="pet-sparkle pet-sparkle-one" aria-hidden="true">☆</div>
+        <div class="pet-sparkle pet-sparkle-two" aria-hidden="true">✦</div>
+        <img class="pet-character" data-pet-character src="assets/pet/characters/pet-cat.svg" alt="电子宠物角色" loading="lazy" decoding="async" />
+        <div class="pet-speech" data-pet-message aria-live="polite">连接宠物服务器中...</div>
+        <div class="pet-nameplate">NAME: <strong data-pet-name>PIXEL</strong></div>
+      </div>
+
+      <div class="pet-stats" aria-label="宠物状态">
+        <div class="pet-stat">
+          <span>MOOD</span>
+          <div class="pet-meter" role="progressbar" aria-label="Mood" aria-valuemin="0" aria-valuemax="100" data-mood-meter><i data-mood-bar></i></div>
+          <b data-mood-value>70</b>
+        </div>
+        <div class="pet-stat">
+          <span>BELLY</span>
+          <div class="pet-meter" role="progressbar" aria-label="Belly" aria-valuemin="0" aria-valuemax="100" data-belly-meter><i data-belly-bar></i></div>
+          <b data-belly-value>65</b>
+        </div>
+        <div class="pet-stat pet-coins">
+          <span>COINS</span>
+          <div class="pet-coin-track">● ● ●</div>
+          <b data-coins-value>20</b>
+        </div>
+      </div>
+
+      <div class="pet-music-organ" aria-label="音乐摄取进度">
+        <div class="pet-music-label">
+          <span>MUSIC ORGAN</span>
+          <b data-pet-music-value>0 / 38</b>
+        </div>
+        <div class="pet-music-meter" role="progressbar" aria-label="Consumed music" aria-valuemin="0" aria-valuemax="38" data-pet-music-meter>
+          <i data-pet-music-bar></i>
+        </div>
+        <a class="pet-ending-link" href="archive-recovery.html" data-pet-ending-link hidden>OPEN UNKNOWN ARCHIVE</a>
+      </div>
+
+      <div class="pet-actions" aria-label="宠物互动">
+        <button type="button" data-pet-action="hello">HELLO</button>
+        <button type="button" data-pet-action="feed">FEED</button>
+        <button type="button" data-pet-action="play">PLAY</button>
+        <button type="button" data-pet-action="sleep">SLEEP</button>
+        <button type="button" data-pet-action="reset">RESET</button>
+      </div>
+
+      <div class="pet-ticker"><span>♥ ONLINE ♥ HAPPY HOME ♥ ARCHIVE 2006 ♥ MUSIC TASTES GOOD ♥</span></div>
+    </section>
+
+    <div class="pet-reset-overlay" data-pet-reset-overlay hidden>
+      <form class="pet-reset-dialog" data-pet-reset-form>
+        <strong>DEBUG RESET</strong>
+        <p>输入调试密码以清除音乐投喂、杂谈复原和全部日记解谜进度。</p>
+        <input type="password" inputmode="numeric" autocomplete="off" data-pet-reset-password aria-label="调试重置密码" />
+        <p class="pet-reset-error" data-pet-reset-error aria-live="polite"></p>
+        <div>
+          <button type="button" data-pet-reset-cancel>取消</button>
+          <button type="submit">重置</button>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <script src="music-data.js"></script>
+  <script src="pet-state.js"></script>
+  <script src="pet.js"></script>
+</body>
+</html>
