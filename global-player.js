@@ -427,7 +427,10 @@
   const savedState = loadState();
   const savedIndex = Number.isInteger(savedState?.trackIndex) ? savedState.trackIndex : 0;
   const savedVolume = Number.isFinite(savedState?.volume) ? savedState.volume : 0.5;
-  const resumeTime = Math.max(0, Number(savedState?.currentTime) || 0);
+  const stateAge = Number.isFinite(savedState?.updatedAt) ? Date.now() - savedState.updatedAt : Infinity;
+  const shouldResume = savedState?.wasPlaying === true && stateAge >= 0 && stateAge < 30000;
+  const navigationDelay = shouldResume ? Math.min(stateAge / 1000, 10) : 0;
+  const resumeTime = Math.max(0, Number(savedState?.currentTime) || 0) + navigationDelay;
 
   audio.volume = Math.max(0, Math.min(savedVolume, 1));
   volumeSlider.value = String(audio.volume);
@@ -436,5 +439,5 @@
   collapseButton.textContent = shouldCollapse ? "+" : "−";
   collapseButton.setAttribute("aria-label", shouldCollapse ? "展开播放器" : "折叠播放器");
   collapseButton.title = shouldCollapse ? "展开播放器" : "折叠播放器";
-  loadTrack(savedIndex, false, resumeTime, 1, true);
+  loadTrack(savedIndex, shouldResume, resumeTime, 1, !shouldResume);
 })();

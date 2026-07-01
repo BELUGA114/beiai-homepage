@@ -636,12 +636,15 @@
   const sharedVolume = Number.isFinite(sharedState?.volume)
     ? Math.max(0, Math.min(sharedState.volume, 1))
     : Number(volumeSlider.value);
-  const resumeTime = Math.max(0, Number(sharedState?.currentTime) || 0);
+  const stateAge = Number.isFinite(sharedState?.updatedAt) ? Date.now() - sharedState.updatedAt : Infinity;
+  const shouldResume = sharedState?.wasPlaying === true && stateAge >= 0 && stateAge < 30000;
+  const navigationDelay = shouldResume ? Math.min(stateAge / 1000, 10) : 0;
+  const resumeTime = Math.max(0, Number(sharedState?.currentTime) || 0) + navigationDelay;
 
   audio.volume = sharedVolume;
   volumeSlider.value = String(sharedVolume);
   renderPlaylist();
-  loadTrack(sharedIndex, false, resumeTime, 1, true);
+  loadTrack(sharedIndex, shouldResume, resumeTime, 1, !shouldResume);
   resizeCanvas();
   drawVisualizer();
 
