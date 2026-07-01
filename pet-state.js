@@ -116,17 +116,25 @@
 
   function getMusicProgress() {
     const consumed = getConsumedTracks();
-    const currentSources = new Set(tracks.map((track) => track.src));
+    const feedableTracks = tracks.filter((track) => track.petFeedable !== false);
+    const currentSources = new Set(feedableTracks.map((track) => track.src));
     const consumedCount = Array.from(consumed).filter((source) => currentSources.has(source)).length;
     return {
       consumed: consumedCount,
-      total: tracks.length,
-      complete: tracks.length > 0 && consumedCount >= tracks.length
+      total: feedableTracks.length,
+      complete: feedableTracks.length > 0 && consumedCount >= feedableTracks.length
     };
   }
 
   function consumeTrack(track) {
     if (!track?.src) return { changed: false, ...getMusicProgress() };
+    if (track.petFeedable === false) {
+      const state = getPetState();
+      state.sleeping = false;
+      state.message = "这首歌无法被宠物消化。";
+      savePetState(state);
+      return { changed: false, reason: "indigestible", track, ...getMusicProgress() };
+    }
 
     const consumed = getConsumedTracks();
     if (consumed.has(track.src)) return { changed: false, ...getMusicProgress() };

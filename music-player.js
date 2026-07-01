@@ -464,6 +464,11 @@
   async function feedTrack(index) {
     if (!petApi || isConsumed(index)) return;
     const track = tracks[index];
+    if (track.petFeedable === false) {
+      petApi.consumeTrack(track);
+      playerStatus.textContent = "这首歌无法被宠物消化。";
+      return;
+    }
     const requestConfirmation = typeof window.requestPetMusicFeed === "function"
       ? window.requestPetMusicFeed(track)
       : Promise.resolve(window.confirm(`确定把《${track.title}》投喂给宠物吗？此操作不可逆。`));

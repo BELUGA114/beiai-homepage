@@ -5,4 +5,10 @@ music/
 get it/成就：（初级成就）.txt
 get it/tip.txt
 
-music/
+# Keep the existing music archive ignored, but publish the new anomaly track.
+!music/
+music/*
+!music/1.mp3
+!music/covers/
+music/covers/*
+!music/covers/1.png

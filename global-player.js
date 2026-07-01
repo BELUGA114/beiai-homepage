@@ -316,6 +316,11 @@
   async function feedCurrentTrack() {
     if (!petApi || allTracksConsumed || isConsumed(currentIndex)) return;
     const track = tracks[currentIndex];
+    if (track.petFeedable === false) {
+      petApi.consumeTrack(track);
+      status.textContent = "无法消化";
+      return;
+    }
     const requestConfirmation = typeof window.requestPetMusicFeed === "function"
       ? window.requestPetMusicFeed(track)
       : Promise.resolve(window.confirm(`确定把《${track.title}》投喂给宠物吗？此操作不可逆。`));

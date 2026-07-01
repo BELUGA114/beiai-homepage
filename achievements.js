@@ -393,7 +393,10 @@
     saveState();
     unlock(59);
     const tracks = Array.isArray(window.BEIAI_MUSIC_TRACKS) ? window.BEIAI_MUSIC_TRACKS : [];
-    if (tracks.length && tracks.every((track) => state.cleanTracks[trackKey(track)])) unlock(62);
+    const achievementTracks = tracks.filter((track, index) => (
+      track.achievementEligible !== false && Boolean(musicAchievementIds[index])
+    ));
+    if (achievementTracks.length && achievementTracks.every((track) => state.cleanTracks[trackKey(track)])) unlock(62);
   }
 
   function watchAudio(audio) {
@@ -418,7 +421,8 @@
         session.lastSavedSecond = wholeSecond;
         saveState();
       }
-      if (listened >= 15) unlock(musicAchievementIds[session.index]);
+      const achievementId = musicAchievementIds[session.index];
+      if (listened >= 15 && achievementId) unlock(achievementId);
     });
   }
 
