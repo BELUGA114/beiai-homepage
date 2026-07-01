@@ -99,6 +99,8 @@
   }
 
   function handleAction(action) {
+    window.BEIAI_ACHIEVEMENTS?.unlock(8);
+
     if (action === "hello") {
       wakePet();
       commit(randomItem(helloLines));
@@ -157,6 +159,7 @@
 
     state.sleeping = false;
     commit("RE-GENERATE 完成！新的角色与背景已保存。");
+    window.BEIAI_ACHIEVEMENTS?.unlock(9);
   }
 
   function closeDebugReset() {

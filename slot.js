@@ -47,10 +47,13 @@
     spinning = false;
     slotButton.disabled = false;
     save();
+    if (uniqueCount === 2) window.BEIAI_ACHIEVEMENTS?.unlock(50);
+    if (state.coins === 0) window.BEIAI_ACHIEVEMENTS?.unlock(52);
   }
 
   function startSlot() {
     if (spinning) return;
+    window.BEIAI_ACHIEVEMENTS?.unlock(10);
     state = petApi.getPetState();
     if (state.coins < SLOT_COST) {
       slotResult.textContent = "需要至少 5 coins 才能启动。";

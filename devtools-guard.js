@@ -31,6 +31,10 @@
 
   function lockPage(reason = "DEVTOOLS PANEL DETECTED") {
     if (locked || document.getElementById(LOCK_SCREEN_ID)) return;
+    const currentPage = window.location.pathname.split("/").pop().toLowerCase();
+    if (["diary.html", "talk.html", "notice.html", "aichat.html"].includes(currentPage)) {
+      window.BEIAI_ACHIEVEMENTS?.unlock(60);
+    }
     locked = true;
     root.classList.add("devtools-locked");
     pauseMedia();

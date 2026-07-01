@@ -302,8 +302,10 @@ chatForms.forEach((form) => {
     setRequestState(true);
 
     let reply;
+    let requestSucceeded = false;
     try {
       reply = await requestAIReply(text);
+      requestSucceeded = true;
     } catch (error) {
       reply = error.name === "AbortError"
         ? "连接 AI 失败：请求超时，请稍后再试。"
@@ -313,6 +315,7 @@ chatForms.forEach((form) => {
     }
 
     addMessage("ai", reply);
+    if (requestSucceeded) window.BEIAI_ACHIEVEMENTS?.unlock(7);
   });
 });
 

@@ -220,6 +220,18 @@
     statusSummary.textContent = `一共（${entries.length}）篇，解锁（${unlocked}）篇，锁定（${locked}）篇，摧毁（${destroyed}）篇`;
   }
 
+  function reportDiaryAchievement(type) {
+    const puzzleIds = Object.keys(encryptedEntries);
+    const hadMistake = Object.entries(puzzleAttempts).some(
+      ([puzzleId, remaining]) => Number(remaining) < getAttemptLimit(puzzleId)
+    );
+    const allSolved = puzzleIds.length > 0 && puzzleIds.every((puzzleId) => Boolean(unlockKeys[puzzleId]));
+    const allDestroyed = puzzleIds.length > 0 && puzzleIds.every(
+      (puzzleId) => !unlockKeys[puzzleId] && getRemainingAttempts(puzzleId) === 0
+    );
+    window.BEIAI_ACHIEVEMENTS?.recordDiary(type, { hadMistake, allSolved, allDestroyed });
+  }
+
   function updateEntryLock(entry) {
     const lock = entry.querySelector(".diary-lock-marker");
     const stateText = entry.querySelector(".diary-lock-state-text");
@@ -336,6 +348,7 @@
       attemptCounter.textContent = "已解锁";
       updateEntryLock(entry);
       updateDiaryStatus();
+      reportDiaryAchievement("solved");
     }
 
     function showAvailableState() {
@@ -358,6 +371,7 @@
       if (expandNow) setEntryExpanded(entry, true);
       updateEntryLock(entry);
       updateDiaryStatus();
+      reportDiaryAchievement("destroyed");
     }
 
     let remainingAttempts = getRemainingAttempts(puzzleId);
@@ -431,6 +445,7 @@
       remainingAttempts = Math.max(0, remainingAttempts - 1);
       puzzleAttempts[puzzleId] = remainingAttempts;
       savePuzzleAttempts();
+      reportDiaryAchievement("mistake");
 
       if (remainingAttempts === 0) {
         showDestroyedState(true);
